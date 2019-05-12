@@ -2,8 +2,13 @@ package com.gmail.at.boban.talevski.fitnesslogger.database;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
+import static android.arch.persistence.room.ForeignKey.RESTRICT;
 
 @Entity(tableName = "exercise")
 public class ExerciseEntry {
@@ -82,5 +87,37 @@ public class ExerciseEntry {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @Entity(
+            tableName = "exercise_session_join",
+            primaryKeys = {"exercise_id", "session_id"},
+            foreignKeys = {
+                    @ForeignKey(
+                            entity = ExerciseEntry.class,
+                            parentColumns = "id",
+                            childColumns = "exercise_id",
+                            onDelete = RESTRICT),
+                    @ForeignKey(
+                            entity = TrainingSessionEntry.class,
+                            parentColumns = "id",
+                            childColumns = "session_id",
+                            onDelete = RESTRICT)
+            },
+            indices = {
+                    @Index(value = "exercise_id"),
+                    @Index(value = "session_id")
+            }
+    )
+    public static class TrainingSessionJoin {
+        @ColumnInfo(name = "exercise_id")
+        @NonNull public final String exerciseId;
+        @ColumnInfo(name = "session_id")
+        @NonNull public final String sessionId;
+
+        public TrainingSessionJoin(String exerciseId, String sessionId) {
+            this.exerciseId = exerciseId;
+            this.sessionId = sessionId;
+        }
     }
 }
