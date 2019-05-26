@@ -1,6 +1,15 @@
 <resources>
     <string name="app_name">Fitness Logger</string>
 
+    <!--Test banner add id-->
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
+    <!--Test app id-->
+    <string name="test_app_id">ca-app-pub-3940256099942544~3347511713</string>
+
+    <!--AdMob app id-->
+    <string name="admob_app_id">ca-app-pub-8793009434941430~3616566489</string>
+
     <!--Buttons-->
     <string name="manage_exercises">Manage Exercises</string>
     <string name="log_training_session">Log Training Session</string>
@@ -8,4 +17,5 @@
     <string name="check_logged_sessions">Check Logged Sessions</string>
     <string name="check_planned_sessions">Check Planned Sessions</string>
     <string name="log_out">Log out</string>
+
 </resources>
