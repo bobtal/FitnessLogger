@@ -21,6 +21,7 @@ public class ExercisesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent addExerciseIntent = new Intent(ExercisesActivity.this, AddExerciseActivity.class);
+                startActivity(addExerciseIntent);
             }
         });
     }
