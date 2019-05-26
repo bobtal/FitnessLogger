@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button logOutButton;
     private AdView adView;
 
+    private Button manageExercisesButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +70,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         logOutButton.setOnClickListener(this);
 
         helloText = findViewById(R.id.textView);
+
+        // Initialize Manage Exercises button
+        manageExercisesButton = findViewById(R.id.manage_exercises_button);
+        // Set its onClick listener
+        manageExercisesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startExercisesActivityIntent =
+                        new Intent(MainActivity.this, ExercisesActivity.class);
+                startActivity(startExercisesActivityIntent);
+            }
+        });
 
     }
 
