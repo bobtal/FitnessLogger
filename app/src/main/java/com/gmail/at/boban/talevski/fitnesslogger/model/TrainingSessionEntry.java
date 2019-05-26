@@ -1,4 +1,4 @@
-package com.gmail.at.boban.talevski.fitnesslogger.database;
+package com.gmail.at.boban.talevski.fitnesslogger.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;

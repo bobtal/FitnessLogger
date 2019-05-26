@@ -7,6 +7,9 @@ import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.util.Log;
 
+import com.gmail.at.boban.talevski.fitnesslogger.model.ExerciseEntry;
+import com.gmail.at.boban.talevski.fitnesslogger.model.TrainingSessionEntry;
+
 @Database(
         entities = {
                 ExerciseEntry.class,
