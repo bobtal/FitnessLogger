@@ -18,4 +18,10 @@
     <string name="check_planned_sessions">Check Planned Sessions</string>
     <string name="log_out">Log out</string>
 
+    <!--AddExerciseActivity-->
+    <string name="category">Category</string>
+    <string name="exercise_name">Exercise Name:</string>
+    <string name="exercise_description">Exercise Description:</string>
+    <string name="add">Add</string>
+
 </resources>
