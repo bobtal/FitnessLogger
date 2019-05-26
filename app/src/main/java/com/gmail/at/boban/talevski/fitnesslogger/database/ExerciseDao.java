@@ -16,6 +16,9 @@ public interface ExerciseDao {
     @Query("SELECT * FROM exercise")
     List<ExerciseEntry> loadAllExercises();
 
+    @Query("SELECT * FROM exercise WHERE category IN (:ids)")
+    List<ExerciseEntry> loadAllExercisesFilterByCategory(List<Integer> ids);
+
     @Insert
     void insertExercise(ExerciseEntry exerciseEntry);
 
