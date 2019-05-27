@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import com.gmail.at.boban.talevski.fitnesslogger.R;
 import com.gmail.at.boban.talevski.fitnesslogger.database.AppDatabase;
 import com.gmail.at.boban.talevski.fitnesslogger.model.ExerciseEntry;
+import com.gmail.at.boban.talevski.fitnesslogger.utils.AppExecutors;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
@@ -36,7 +37,7 @@ public class AddExerciseActivity extends AppCompatActivity {
         addExerciseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ExerciseEntry newExercise = new ExerciseEntry(
+                final ExerciseEntry newExercise = new ExerciseEntry(
                         exerciseNameEditText.getText().toString(),
                         exerciseDescriptionEditText.getText().toString(),
                         getExerciseIdFromSpinner(categorySpinner.getSelectedItem().toString()),
@@ -44,8 +45,13 @@ public class AddExerciseActivity extends AppCompatActivity {
                         null
                 );
 
-                db.exerciseDao().insertExercise(newExercise);
-                finish();
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        db.exerciseDao().insertExercise(newExercise);
+                        finish();
+                    }
+                });
             }
         });
     }
