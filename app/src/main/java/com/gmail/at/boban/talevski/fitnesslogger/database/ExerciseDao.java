@@ -1,5 +1,6 @@
 package com.gmail.at.boban.talevski.fitnesslogger.database;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -14,7 +15,7 @@ import java.util.List;
 public interface ExerciseDao {
 
     @Query("SELECT * FROM exercise")
-    List<ExerciseEntry> loadAllExercises();
+    LiveData<List<ExerciseEntry>> loadAllExercises();
 
     @Query("SELECT * FROM exercise WHERE category IN (:ids)")
     List<ExerciseEntry> loadAllExercisesFilterByCategory(List<Integer> ids);
