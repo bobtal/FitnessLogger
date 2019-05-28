@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.gmail.at.boban.talevski.fitnesslogger.R;
+import com.gmail.at.boban.talevski.fitnesslogger.utils.CheckNetworkTask;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -92,6 +93,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI(account);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkNetworkConnectivity();
+    }
+
+    private void checkNetworkConnectivity() {
+        CheckNetworkTask task = new CheckNetworkTask(this);
+        task.execute();
     }
 
     private void updateUI(GoogleSignInAccount account) {

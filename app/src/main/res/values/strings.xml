@@ -24,4 +24,7 @@
     <string name="exercise_description">Exercise Description:</string>
     <string name="add">Add</string>
 
+    <!--Error messages-->
+    <string name="no_network">No network connectivity. Please check your network connection and try again.</string>
+
 </resources>
