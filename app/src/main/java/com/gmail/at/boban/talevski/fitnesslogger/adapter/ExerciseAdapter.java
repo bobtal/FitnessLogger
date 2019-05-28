@@ -43,6 +43,10 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
         return exerciseList.size();
     }
 
+    public List<ExerciseEntry> getExercises() {
+        return exerciseList;
+    }
+
     class ExerciseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView textView;
