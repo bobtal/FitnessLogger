@@ -2,6 +2,7 @@ package com.gmail.at.boban.talevski.fitnesslogger.ui;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,8 @@ import com.gmail.at.boban.talevski.fitnesslogger.adapter.ExerciseAdapter;
 import com.gmail.at.boban.talevski.fitnesslogger.database.AppDatabase;
 import com.gmail.at.boban.talevski.fitnesslogger.model.ExerciseEntry;
 import com.gmail.at.boban.talevski.fitnesslogger.utils.AppExecutors;
+import com.gmail.at.boban.talevski.fitnesslogger.viewmodel.ExercisesViewModel;
+import com.gmail.at.boban.talevski.fitnesslogger.viewmodel.ExercisesViewModelFactory;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
@@ -53,9 +56,12 @@ public class ExercisesActivity extends AppCompatActivity {
         // Set the recycler view layout
         recyclerViewExercises.setLayoutManager(new LinearLayoutManager(this));
 
-        // Initialize the adapter and attach it to the recycler view
+        // Set up the viewmodel
+        ExercisesViewModelFactory factory = new ExercisesViewModelFactory(db, signedInUserId);
+        ExercisesViewModel viewModel =
+                ViewModelProviders.of(this, factory).get(ExercisesViewModel.class);
         final LiveData<List<ExerciseEntry>> exercises = db.exerciseDao().loadAllExercisesForUser(signedInUserId);
-        exercises.observe(this, new Observer<List<ExerciseEntry>>() {
+        viewModel.getExercises().observe(this, new Observer<List<ExerciseEntry>>() {
             @Override
             public void onChanged(@Nullable List<ExerciseEntry> exerciseEntries) {
                 exerciseAdapter = new ExerciseAdapter(exerciseEntries, ExercisesActivity.this);
