@@ -23,6 +23,9 @@ public interface ExerciseDao {
     @Query("SELECT * FROM exercise WHERE category IN (:ids)")
     List<ExerciseEntry> loadAllExercisesFilterByCategory(List<Integer> ids);
 
+    @Query("SELECT * FROM exercise WHERE user_id = :userId AND name LIKE '%' || :searchString || '%'")
+    LiveData<List<ExerciseEntry>> loadAllExercisesForUser(String userId, String searchString);
+
     @Insert
     void insertExercise(ExerciseEntry exerciseEntry);
 
