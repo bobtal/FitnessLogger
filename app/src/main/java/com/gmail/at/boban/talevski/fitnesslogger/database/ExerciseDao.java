@@ -17,6 +17,9 @@ public interface ExerciseDao {
     @Query("SELECT * FROM exercise")
     LiveData<List<ExerciseEntry>> loadAllExercises();
 
+    @Query("SELECT * FROM exercise WHERE user_id = :userId")
+    LiveData<List<ExerciseEntry>> loadAllExercisesForUser(String userId);
+
     @Query("SELECT * FROM exercise WHERE category IN (:ids)")
     List<ExerciseEntry> loadAllExercisesFilterByCategory(List<Integer> ids);
 

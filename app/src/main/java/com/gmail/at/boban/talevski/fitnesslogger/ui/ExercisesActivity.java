@@ -17,13 +17,18 @@ import com.gmail.at.boban.talevski.fitnesslogger.adapter.ExerciseAdapter;
 import com.gmail.at.boban.talevski.fitnesslogger.database.AppDatabase;
 import com.gmail.at.boban.talevski.fitnesslogger.model.ExerciseEntry;
 import com.gmail.at.boban.talevski.fitnesslogger.utils.AppExecutors;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import java.util.List;
 
 public class ExercisesActivity extends AppCompatActivity {
 
+    public static final String ANONYMOUS_USER_ID = "ANONYMOUS";
+
     private RecyclerView recyclerViewExercises;
     private ExerciseAdapter exerciseAdapter;
+    private String signedInUserId;
 
     private AppDatabase db;
 
@@ -31,6 +36,14 @@ public class ExercisesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercises);
+
+        // Initialize the signed in account
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if (account != null) {
+            signedInUserId = account.getId();
+        } else {
+            signedInUserId = ANONYMOUS_USER_ID;
+        }
 
         // Initialize the database
         db = AppDatabase.getInstance(getApplicationContext());
@@ -41,7 +54,7 @@ public class ExercisesActivity extends AppCompatActivity {
         recyclerViewExercises.setLayoutManager(new LinearLayoutManager(this));
 
         // Initialize the adapter and attach it to the recycler view
-        final LiveData<List<ExerciseEntry>> exercises = db.exerciseDao().loadAllExercises();
+        final LiveData<List<ExerciseEntry>> exercises = db.exerciseDao().loadAllExercisesForUser(signedInUserId);
         exercises.observe(this, new Observer<List<ExerciseEntry>>() {
             @Override
             public void onChanged(@Nullable List<ExerciseEntry> exerciseEntries) {

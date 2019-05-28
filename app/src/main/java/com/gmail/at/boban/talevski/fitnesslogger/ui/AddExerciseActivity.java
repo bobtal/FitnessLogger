@@ -68,7 +68,7 @@ public class AddExerciseActivity extends AppCompatActivity {
         if (account != null) {
             return account.getId();
         } else {
-            return null;
+            return ExercisesActivity.ANONYMOUS_USER_ID;
         }
     }
 
