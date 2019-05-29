@@ -1,10 +1,13 @@
 package com.gmail.at.boban.talevski.fitnesslogger.ui;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Explode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -80,10 +83,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View view) {
                 Intent startExercisesActivityIntent =
                         new Intent(MainActivity.this, ExercisesActivity.class);
-                startActivity(startExercisesActivityIntent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(startExercisesActivityIntent, ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle());
+                } else {
+                    startActivity(startExercisesActivityIntent);
+                }
             }
         });
 
+        setupTransitions();
+
+    }
+
+    private void setupTransitions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setExitTransition(new Explode());
+        }
     }
 
     @Override
