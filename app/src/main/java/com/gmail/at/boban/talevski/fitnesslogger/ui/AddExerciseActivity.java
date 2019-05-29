@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.gmail.at.boban.talevski.fitnesslogger.R;
 import com.gmail.at.boban.talevski.fitnesslogger.database.AppDatabase;
@@ -37,21 +38,32 @@ public class AddExerciseActivity extends AppCompatActivity {
         addExerciseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final ExerciseEntry newExercise = new ExerciseEntry(
-                        exerciseNameEditText.getText().toString(),
-                        exerciseDescriptionEditText.getText().toString(),
-                        getExerciseIdFromSpinner(categorySpinner.getSelectedItem().toString()),
-                        getUserId(),
-                        null
-                );
 
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        db.exerciseDao().insertExercise(newExercise);
-                        finish();
-                    }
-                });
+                // Prevent a blank entry for either name or description
+                if (exerciseNameEditText.getText().toString().trim().equals("") ||
+                        exerciseDescriptionEditText.getText().toString().trim().equals("")) {
+                    Toast.makeText(AddExerciseActivity.this,
+                            getString(R.string.name_description_blank), Toast.LENGTH_LONG).show();
+                } else {
+                    // Create the new ExerciseEntry object using the entered text
+                    // and the id of the currently logged in user
+                    final ExerciseEntry newExercise = new ExerciseEntry(
+                            exerciseNameEditText.getText().toString(),
+                            exerciseDescriptionEditText.getText().toString(),
+                            getExerciseIdFromSpinner(categorySpinner.getSelectedItem().toString()),
+                            getUserId(),
+                            null
+                    );
+
+                    // Add the ExerciseEntry object in the db using an Executor
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            db.exerciseDao().insertExercise(newExercise);
+                            finish();
+                        }
+                    });
+                }
             }
         });
     }
