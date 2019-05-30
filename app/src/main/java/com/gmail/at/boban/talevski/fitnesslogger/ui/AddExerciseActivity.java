@@ -1,7 +1,10 @@
 package com.gmail.at.boban.talevski.fitnesslogger.ui;
 
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Slide;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -66,6 +69,14 @@ public class AddExerciseActivity extends AppCompatActivity {
                 }
             }
         });
+
+        setupTransitions();
+    }
+
+    private void setupTransitions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setEnterTransition(new Slide(Gravity.END));
+        }
     }
 
     private void initViews() {
