@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.transition.Explode;
 import android.transition.Slide;
+import android.view.Gravity;
 import android.view.View;
 
 import com.gmail.at.boban.talevski.fitnesslogger.R;
@@ -117,7 +118,7 @@ public class ExercisesActivity extends AppCompatActivity {
 
     private void setupTransitions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setExitTransition(new Slide());
+            getWindow().setExitTransition(new Slide(Gravity.START));
         }
     }
 
