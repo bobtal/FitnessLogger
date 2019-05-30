@@ -1,9 +1,11 @@
 package com.gmail.at.boban.talevski.fitnesslogger.ui;
 
+import android.app.ActivityOptions;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.transition.Explode;
+import android.transition.Slide;
 import android.view.View;
 
 import com.gmail.at.boban.talevski.fitnesslogger.R;
@@ -76,7 +80,12 @@ public class ExercisesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent addExerciseIntent = new Intent(ExercisesActivity.this, AddExerciseActivity.class);
-                startActivity(addExerciseIntent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(addExerciseIntent,
+                            ActivityOptions.makeSceneTransitionAnimation(ExercisesActivity.this).toBundle());
+                } else {
+                    startActivity(addExerciseIntent);
+                }
             }
         });
 
@@ -102,5 +111,14 @@ public class ExercisesActivity extends AppCompatActivity {
                 });
             }
         }).attachToRecyclerView(recyclerViewExercises);
+
+        setupTransitions();
     }
+
+    private void setupTransitions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setExitTransition(new Slide());
+        }
+    }
+
 }
