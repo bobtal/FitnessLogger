@@ -23,6 +23,7 @@ import com.gmail.at.boban.talevski.fitnesslogger.adapter.ExerciseAdapter;
 import com.gmail.at.boban.talevski.fitnesslogger.database.AppDatabase;
 import com.gmail.at.boban.talevski.fitnesslogger.model.ExerciseEntry;
 import com.gmail.at.boban.talevski.fitnesslogger.utils.AppExecutors;
+import com.gmail.at.boban.talevski.fitnesslogger.utils.WidgetUtils;
 import com.gmail.at.boban.talevski.fitnesslogger.viewmodel.ExercisesViewModel;
 import com.gmail.at.boban.talevski.fitnesslogger.viewmodel.ExercisesViewModelFactory;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -101,13 +102,16 @@ public class ExercisesActivity extends AppCompatActivity {
             // Called when a user swipes left or right on a ViewHolder
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                // Here is where you'll implement swipe to delete
+                // Delete the "swiped" exercise from the database
                 AppExecutors.getInstance().diskIO().execute(new Runnable() {
                     @Override
                     public void run() {
                         int position = viewHolder.getAdapterPosition();
                         List<ExerciseEntry> exercises = exerciseAdapter.getExercises();
                         db.exerciseDao().deleteExercise(exercises.get(position));
+
+                        // update the widget
+                        WidgetUtils.updateWidget(ExercisesActivity.this);
                     }
                 });
             }

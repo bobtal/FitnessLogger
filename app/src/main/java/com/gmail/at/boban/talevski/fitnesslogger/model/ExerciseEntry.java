@@ -6,12 +6,14 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import static android.arch.persistence.room.ForeignKey.RESTRICT;
 
 @Entity(tableName = "exercise")
-public class ExerciseEntry {
+public class ExerciseEntry implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -40,6 +42,27 @@ public class ExerciseEntry {
         this.userId = userId;
         this.imageUrl = imageUrl;
     }
+
+    protected ExerciseEntry(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        description = in.readString();
+        category = in.readInt();
+        userId = in.readString();
+        imageUrl = in.readString();
+    }
+
+    public static final Creator<ExerciseEntry> CREATOR = new Creator<ExerciseEntry>() {
+        @Override
+        public ExerciseEntry createFromParcel(Parcel in) {
+            return new ExerciseEntry(in);
+        }
+
+        @Override
+        public ExerciseEntry[] newArray(int size) {
+            return new ExerciseEntry[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -87,6 +110,21 @@ public class ExerciseEntry {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(name);
+        parcel.writeString(description);
+        parcel.writeInt(category);
+        parcel.writeString(userId);
+        parcel.writeString(imageUrl);
     }
 
     @Entity(

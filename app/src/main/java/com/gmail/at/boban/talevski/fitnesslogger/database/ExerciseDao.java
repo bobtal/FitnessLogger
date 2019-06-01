@@ -15,7 +15,7 @@ import java.util.List;
 public interface ExerciseDao {
 
     @Query("SELECT * FROM exercise")
-    LiveData<List<ExerciseEntry>> loadAllExercises();
+    List<ExerciseEntry> loadAllExercises();
 
     @Query("SELECT * FROM exercise WHERE user_id = :userId")
     LiveData<List<ExerciseEntry>> loadAllExercisesForUser(String userId);

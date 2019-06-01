@@ -1,5 +1,7 @@
 package com.gmail.at.boban.talevski.fitnesslogger.ui;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +17,8 @@ import com.gmail.at.boban.talevski.fitnesslogger.R;
 import com.gmail.at.boban.talevski.fitnesslogger.database.AppDatabase;
 import com.gmail.at.boban.talevski.fitnesslogger.model.ExerciseEntry;
 import com.gmail.at.boban.talevski.fitnesslogger.utils.AppExecutors;
+import com.gmail.at.boban.talevski.fitnesslogger.utils.WidgetUtils;
+import com.gmail.at.boban.talevski.fitnesslogger.widget.ExerciseWidgetProvider;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
@@ -63,6 +67,11 @@ public class AddExerciseActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             db.exerciseDao().insertExercise(newExercise);
+
+                            // update the widget
+                            WidgetUtils.updateWidget(AddExerciseActivity.this);
+
+                            // finish the activity
                             finish();
                         }
                     });
