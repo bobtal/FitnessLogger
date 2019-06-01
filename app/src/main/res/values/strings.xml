@@ -27,5 +27,7 @@
     <!--Error messages-->
     <string name="no_network">No network connectivity. Please check your network connection and try again.</string>
     <string name="name_description_blank">Name and Description cannot be blank. Please enter appropriate information in the text fields.</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 </resources>
