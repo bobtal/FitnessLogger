@@ -31,7 +31,7 @@ class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     // used for waiting for the db call in onCreate to finish and populate exerciseList
     // before calls to getCount() and getViewAt() are done
-    // so that the adapter has the date and populates the views properly
+    // so that the adapter has the data and populates the views properly
     private CountDownLatch countDown;
 
     public ListRemoteViewsFactory(Context context) {
